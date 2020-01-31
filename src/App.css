@@ -1,0 +1,78 @@
+.App {
+  height: 100vh;
+}
+
+.App-logo {
+  height: 40vmin;
+}
+
+.flex-center-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
+
+.ML10 {
+  margin-left: 10px;
+}
+
+.text_align {
+  text-align: center;
+}
+
+.MB10 {
+  margin-bottom: 10px;
+}
+
+.MB20 {
+  margin-bottom: 20px;
+}
+
+.MB30 {
+  margin-bottom: 30px !important;
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #09d3ac;
+}
+
+.ft-alert-text, .ft-text-alert {
+  text-align: center;
+  color: #ff0066;
+  font-weight: bold;
+}

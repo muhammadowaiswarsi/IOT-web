@@ -1,0 +1,27 @@
+.btn-primary {
+  background-color: #fff;
+  border-color: #ced4da;
+  color: #7e7e7e;
+  min-width: 40%;
+  border-radius: 10px;
+  cursor: pointer !important;
+}
+
+.btn_style{
+  display: flex;
+  justify-content: space-evenly
+}
+
+.btn-primary:active {
+  background-color: #fff !important;
+  border-color: #ced4da !important;
+  color: #7e7e7e !important;
+  box-shadow: none !important;
+}
+
+.btn-primary:hover {
+  background-color: #fff !important;
+  border-color: #ced4da !important;
+  color: #7e7e7e !important;
+  box-shadow: none !important;
+}

@@ -1,0 +1,10 @@
+.SignupContainer{
+    height: 100%;
+}
+
+.SignupContainer .main_col {
+    height: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    color: #7e7e7e;
+  }

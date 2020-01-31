@@ -1,0 +1,5 @@
+export const CONFIRM_ROUTE = 'CONFIRM_ROUTE'
+export const STUDENTAUTHED = 'STUDENTAUTHED'
+export const COMPANYAUTHED = 'COMPANYAUTHED'
+export const ADMINAUTHED = 'ADMINAUTHED'
+export const USER = 'USER'

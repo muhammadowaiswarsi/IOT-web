@@ -1,0 +1,30 @@
+.LoginContainer {
+  height: 100%;
+}
+
+.LoginContainer .main_col {
+  height: 600px;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 15%;
+  color: #7e7e7e;
+}
+
+.LoginContainer .tabs_border_selected {
+  border-top: 5px solid #090606;
+  width: 50%;
+  text-align: center;
+  color: #7e7e7e;
+  height: 40px;
+}
+
+.form-check-inline {
+  height: 100%;
+}
+
+.LoginContainer .tabs_border_unselected {
+  border-top: 5px solid #fff;
+  width: 50%;
+  text-align: center;
+  height: 40px;
+}
