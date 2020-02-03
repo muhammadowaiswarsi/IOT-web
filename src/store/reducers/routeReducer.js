@@ -1,15 +1,11 @@
 import {
     CONFIRM_ROUTE,
-    STUDENTAUTHED,
-    COMPANYAUTHED,
-    ADMINAUTHED,
+    AUTHED,
     USER
 } from '../constant'
 const initialState = {
     confirmRoute: false,
-    Studentauthed: false,
-    Companyauthed: false,
-    Adminauthed: false,
+    authed: false,
     user: {}
 }
 
@@ -21,22 +17,10 @@ export default function routeReducer(state = initialState, action) {
                 confirmRoute: action.payload
             }
 
-        case STUDENTAUTHED:
+        case AUTHED:
             return {
                 ...state,
-                Studentauthed: action.payload
-            }
-
-        case COMPANYAUTHED:
-            return {
-                ...state,
-                Companyauthed: action.payload
-            }
-
-        case ADMINAUTHED:
-            return {
-                ...state,
-                Adminauthed: action.payload
+                authed: action.payload
             }
 
         case USER:

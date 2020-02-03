@@ -1,15 +1,15 @@
 import React from "react";
-import StudentMain from "../../Component/StudentMain";
-import { Query } from "react-apollo";
-// import { AppSync } from "./../../Config/graphql-config";
+import Dashboard from "../../Component/Dashboard";
 import "./index.css";
 import { connect } from "react-redux";
-import routeAction from "./../../store/actions/routeAction";
-import { logout } from "./../../Service/AuthService";
-import { getStudentData, getCompanies } from "./../../Config/Queries";
+import { Query } from "react-apollo";
+import routeAction from "../../store/actions/routeAction";
+import { logout } from "../../Service/AuthService";
+import { getCompanyData, getStudents } from "../../Config/Queries";
+// import { AppSync } from "./../../Config/graphql-config";
 import ReactLoading from "react-loading";
 
-class StudentMainContainer extends React.Component {
+class DashboardContainer extends React.Component {
   constructor(props) {
     super(props);
 
@@ -27,7 +27,7 @@ class StudentMainContainer extends React.Component {
         this.setState({
           loader: false
         });
-        this.props.Studentauthed(false);
+        this.props.authed(false);
         this.props.history.replace("/login");
       })
       .catch(err => {
@@ -45,11 +45,11 @@ class StudentMainContainer extends React.Component {
         {/* <Query
           fetchPolicy="network-only"
           client={AppSync}
-          query={getStudentData}
-          variables={{ StudentID: this.props.user.user_id }}
+          query={getCompanyData}
+          variables={{ companyID: this.props.user.user_id }}
         >
           {({ loading, error, data }) => {
-            let currentUser = data && data.getStudentData;
+            let currentUser = data && data.getCompanyData;
             if (loading)
               return (
                 <div
@@ -70,29 +70,28 @@ class StudentMainContainer extends React.Component {
                   />
                 </div>
               );
-            // if (error) return ;
             return (
               <Query
                 fetchPolicy="network-only"
                 client={AppSync}
-                query={getCompanies}
-                variables={{ StudentID: this.props.user.user_id }}
+                query={getStudents}
+                variables={{ companyID: this.props.user.user_id }}
               >
                 {({ loading, error, data }) => {
-                  let CompaniesData = data.getCompanies;
-                  return (
-                    <StudentMain
+                  let StudentsData = data.getStudents;
+                  return ( */}
+                    <Dashboard
                       logout={this.logout}
-                      CompaniesData={CompaniesData}
-                      currentUser={currentUser}
-                      loader={loader}
+                      // StudentsData={StudentsData}
+                      // currentUser={currentUser}
+                      // loader={loader}
                     />
-                  );
-                }}
-              </Query>
-            );
-          }}
-        </Query> */}
+        {/* //           );
+        //         }}
+        //       </Query>
+        //     );
+        //   }}
+        // </Query> */}
       </div>
     );
   }
@@ -100,19 +99,19 @@ class StudentMainContainer extends React.Component {
 
 const mapDispatchToProp = dispatch => {
   return {
-    Studentauthed: flag => {
-      dispatch(routeAction.Studentauthed(flag));
+    authed: flag => {
+      dispatch(routeAction.authed(flag));
     }
   };
 };
 
-const mapStatetoProp = state => {
+const mapStateToProp = state => {
   return {
     user: state.routeReducer.user
   };
 };
 
 export default connect(
-  mapStatetoProp,
+  mapStateToProp,
   mapDispatchToProp
-)(StudentMainContainer);
+)(DashboardContainer);

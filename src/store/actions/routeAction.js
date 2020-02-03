@@ -1,30 +1,14 @@
 import {
-    STUDENTAUTHED,
-    COMPANYAUTHED,
-    ADMINAUTHED,
+    AUTHED,
     CONFIRM_ROUTE,
     USER,
 } from '../constant'
 
 export default class routeAction {
 
-    static Studentauthed(flag) {
+    static authed(flag) {
         return {
-            type: STUDENTAUTHED,
-            payload: flag
-        }
-    }
-
-    static Companyauthed(flag) {
-        return {
-            type: COMPANYAUTHED,
-            payload: flag
-        }
-    }
-
-    static Adminauthed(flag) {
-        return {
-            type: ADMINAUTHED,
+            type: AUTHED,
             payload: flag
         }
     }

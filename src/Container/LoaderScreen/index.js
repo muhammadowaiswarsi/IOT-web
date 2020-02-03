@@ -14,34 +14,14 @@ class Loading extends React.Component {
             user_id: user.sub
           }
           this.props.user(obj);
-          if (user.profile === "student") {
-            setTimeout(() => {
-              this.props.Studentauthed(false);
-            }, 100);
-            this.props.history.replace(`/student/main`);
-          } else if (user.profile === "company") {
-            setTimeout(() => {
-              this.props.Companyauthed(false);
-            }, 100);
-            this.props.history.replace(`/company/main`);
-          }
-          else if (user.profile === "admin") {
-            setTimeout(() => {
-              this.props.Adminauthed(false);
-            }, 100);
-            this.props.history.replace(`/admin/main`);
-          }
-        } else {
-          this.props.Studentauthed(false);
-          this.props.Companyauthed(false);
-          this.props.Adminauthed(false);
-          this.props.history.replace("/login");
+          setTimeout(() => {
+            this.props.authed(false);
+          }, 100);
+          this.props.history.replace(`/dashboard`);
         }
       })
       .catch(err => {
-        this.props.Studentauthed(false);
-        this.props.Companyauthed(false);
-        this.props.Adminauthed(false);
+        this.props.authed(false);
         this.props.history.replace("/login");
         console.log(err);
       });
@@ -72,14 +52,8 @@ class Loading extends React.Component {
 
 const dispatchToProp = dispatch => {
   return {
-    Studentauthed: flag => {
-      dispatch(routeAction.Studentauthed(flag));
-    },
-    Companyauthed: flag => {
-      dispatch(routeAction.Companyauthed(flag));
-    },
-    Adminauthed: flag => {
-      dispatch(routeAction.Adminauthed(flag));
+    authed: flag => {
+      dispatch(routeAction.authed(flag));
     },
     user: obj => {
       dispatch(routeAction.user(obj));

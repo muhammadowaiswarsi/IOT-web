@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import LoginContainer from '../Container/Login';
-import StudentMain from '../Container/StudentMain';
-import CompanyMain from '../Container/CompanyMain';
+import DashboardContainer from '../Container/Dashboard';
 import SignupConfirmation from '../Container/SignupConfirmation';
 import SignupContainer from '../Container/Signup';
 import { connect } from "react-redux";
 import routeAction from "./../store/actions/routeAction";
 import Loading from "./../Container/LoaderScreen";
-import AdminMain from "./../Container/AdminMain"
 import { isLoggedIn } from "./../Service/AuthService"
 
 function PrivateRoute({ component: Component, authed, ...rest }) {
@@ -29,26 +27,15 @@ class Routes extends Component {
         super(props)
         this.state = {
             confirmRoute: false,
-            Adminauthed: false,
-            Companyauthed: false,
-            Studentauthed: false
+            authed: false,
         }
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.Studentauthed !== this.props.Studentauthed) {
+        console.log(this.props.authed, "confirm route")
+        if (prevProps.authed !== this.props.authed) {
             this.setState({
-                Studentauthed: this.props.Studentauthed,
-            })
-        }
-        if (prevProps.Companyauthed !== this.props.Companyauthed) {
-            this.setState({
-                Companyauthed: this.props.Companyauthed,
-            })
-        }
-        if (prevProps.Adminauthed !== this.props.Adminauthed) {
-            this.setState({
-                Adminauthed: this.props.Adminauthed,
+                authed: this.props.authed,
             })
         }
         if (prevProps.confirmRoute !== this.props.confirmRoute) {
@@ -60,26 +47,26 @@ class Routes extends Component {
     }
 
     componentDidMount() {
-        isLoggedIn()
-            .then((res) => {
-                if (res.attributes.sub) {
-                    this.setState({
-                        authed: true,
-                    })
-                    let user = res.attributes
-                    let obj = {
-                        user_id: user.sub
-                    }
-                    this.props.user(obj)
-                } else {
-                    this.setState({
-                        authed: false,
-                    })
-                }
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+        // isLoggedIn()
+        //     .then((res) => {
+        //         if (res.attributes.sub) {
+        //             this.setState({
+        //                 authed: true,
+        //             })
+        //             let user = res.attributes
+        //             let obj = {
+        //                 user_id: user.sub
+        //             }
+        //             this.props.user(obj)
+        //         } else {
+        //             this.setState({
+        //                 authed: false,
+        //             })
+        //         }
+        //     })
+        //     .catch((err) => {
+        //         console.log(err)
+        //     })
     }
 
     render() {
@@ -87,15 +74,9 @@ class Routes extends Component {
             <Router>
                 <Route exact path="/" component={Loading} />
                 <Route exact path="/login" component={LoginContainer} />
-                <Route exact path="/registration/:type" component={SignupContainer} />
-                {/* <PrivateRoute exact authed={this.state.Studentauthed} path="/student/main" component={StudentMain} />
-                <PrivateRoute exact authed={this.state.Companyauthed} path="/company/main" component={CompanyMain} />
-                <PrivateRoute exact authed={this.state.Adminauthed} path="/admin/main" component={AdminMain} />
-                <PrivateRoute exact authed={this.state.confirmRoute} path="/confirmation/:type" component={SignupConfirmation} /> */}
-                <Route exact authed={this.state.Studentauthed} path="/student/main" component={StudentMain} />
-                <Route exact authed={this.state.Companyauthed} path="/company/main" component={CompanyMain} />
-                <Route exact authed={this.state.Adminauthed} path="/admin/main" component={AdminMain} />
-                <Route exact authed={this.state.confirmRoute} path="/confirmation/:type" component={SignupConfirmation} />
+                <Route exact path="/registration" component={SignupContainer} />
+                <PrivateRoute exact authed={this.state.confirmRoute} path="/confirmation" component={SignupConfirmation} />
+                <PrivateRoute exact authed={this.state.authed} path="/dashboard" component={DashboardContainer} />
             </Router>
         )
     }
@@ -110,9 +91,7 @@ const mapDispatchToProp = dispatch => {
 const mapStateToProp = (state) => {
     let { routeReducer } = state
     return {
-        Studentauthed: routeReducer.Studentauthed,
-        Companyauthed: routeReducer.Companyauthed,
-        Adminauthed: routeReducer.Adminauthed,
+        authed: routeReducer.authed,
         confirmRoute: routeReducer.confirmRoute
     }
 }

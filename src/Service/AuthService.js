@@ -4,7 +4,7 @@ export const signup = (userObj) => {
     const {
         email,
         password,
-        profile
+        name
     } = userObj;
     return new Promise(async (resolve, reject) => {
         try {
@@ -12,7 +12,7 @@ export const signup = (userObj) => {
                 username: email,
                 password,
                 attributes: {
-                    profile
+                    name
                 }
             });
             resolve({ user_id: newUser.userSub, confirmed: false });

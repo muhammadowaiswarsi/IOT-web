@@ -11,7 +11,7 @@ import { ApolloProvider } from 'react-apollo';
 import { store } from './store';
 import { Provider } from 'react-redux'
 
-// Amplify.configure(config)
+Amplify.configure(config)
 
 ReactDOM.render(
   <Provider store={store}>

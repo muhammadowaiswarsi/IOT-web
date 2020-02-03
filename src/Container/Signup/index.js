@@ -4,6 +4,7 @@ import { Col } from "react-bootstrap";
 import { connect } from "react-redux";
 import { routeAction } from "./../../store/actions/index";
 import { signup } from "./../../Service/AuthService";
+import { isLoggedIn } from "./../../Service/AuthService";
 import { Error } from "./../../Shared/Error";
 import "./index.css";
 
@@ -19,11 +20,9 @@ class SignupContainer extends React.Component {
 
   signUpFunc = (obj) => {
     if (obj.password === obj.confirmPassword) {
-      let { type } = this.props.match.params;
       this.setState({
         loader: true
       });
-      obj.profile = type === "student" ? "student" : "company";
       signup(obj)
         .then(res => {
           obj.user_id = res.user_id;
@@ -33,7 +32,8 @@ class SignupContainer extends React.Component {
             loader: false
           });
           setTimeout(() => {
-            this.props.history.replace(`/confirmation/${type}`);
+            console.log("signup")
+            this.props.history.replace(`/confirmation`);
           }, 100);
         })
         .catch(err => {
@@ -50,24 +50,36 @@ class SignupContainer extends React.Component {
     }
   }
 
+  componentDidMount() {
+    isLoggedIn()
+      .then(res => {
+        if (res.attributes.sub) {
+          let user = res.attributes;
+          let obj = {
+            user_id: user.sub
+          }
+          this.props.user(obj);
+          setTimeout(() => {
+            this.props.authed(false);
+          }, 100);
+          this.props.history.replace(`/dashboard`);
+        }
+      })
+      .catch(err => {
+        this.props.authed(false);
+        this.props.history.replace("/login");
+        console.log(err);
+      });
+  }
+
   submit = obj => {
-    let { firstName, lastName, email, password, confirmPassword, state, city, company } = obj
-    if (obj.profile === "student") {
-      if (firstName && lastName && email && password && confirmPassword && state && city) {
-        this.signUpFunc(obj)
-      } else {
-        this.setState({
-          error: "please fill up all fields"
-        })
-      }
+    let { name, email, password, confirmPassword } = obj
+    if (name && email && password && confirmPassword) {
+      this.signUpFunc(obj)
     } else {
-      if (company && email && password && confirmPassword && state && city) {
-        this.signUpFunc(obj)
-      } else {
-        this.setState({
-          error: "please fill up all fields"
-        })
-      }
+      this.setState({
+        error: "please fill up all fields"
+      })
     }
   };
 
@@ -85,7 +97,7 @@ class SignupContainer extends React.Component {
         >
           <Error errMessage={this.state.error} />
           <Signup
-            params={this.props.match.params}
+            history={this.props.history}
             submit={this.submit}
             loader={this.state.loader}
           />
@@ -100,6 +112,9 @@ const dispatchToProp = dispatch => {
   return {
     confirmRoute: payload => {
       dispatch(routeAction.confirm_route(payload));
+    },
+    authed: flag => {
+      dispatch(routeAction.authed(flag));
     },
     user: obj => {
       dispatch(routeAction.user(obj));

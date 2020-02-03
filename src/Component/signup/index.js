@@ -6,15 +6,10 @@ class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: "",
-      lastName: "",
-      phone: "",
+      name: "",
       email: "",
-      password: "",
-      confirmPassword: "",
-      state: "",
-      company: "",
-      city: ""
+      password: "Hello123!",
+      confirmPassword: "Hello123!",
     };
   }
 
@@ -25,80 +20,40 @@ class Signup extends Component {
   };
 
   submit = e => {
-    let { type } = this.props.params;
     e.preventDefault();
     let {
+      name,
       email,
       password,
-      firstName,
-      lastName,
-      phone,
-      state,
-      city,
-      company,
       confirmPassword
     } = this.state;
     let obj = {
+      name,
       email,
-      firstName,
-      lastName,
-      phone,
-      state,
-      city,
-      company,
       password,
       confirmPassword,
-      profile: type
     };
     this.props.submit(obj);
   };
 
   render() {
     let {
-      firstName,
-      lastName,
+      name,
       email,
       password,
       confirmPassword,
-      phone,
-      state,
-      city,
-      company
     } = this.state;
-    let { type } = this.props.params;
     let { loader } = this.props;
     return (
       <form onSubmit={this.submit}>
-        {type === "student" ? (
-          <span>
-            <InputField
-              name="firstName"
-              label="First Name"
-              type="name"
-              placeholder=""
-              value={firstName}
-              onChange={e => this.handleChange(e)}
-            />
-
-            <InputField
-              name="lastName"
-              label="Last Name"
-              type="name"
-              placeholder=""
-              value={lastName}
-              onChange={e => this.handleChange(e)}
-            />
-          </span>
-        ) : (
-            <InputField
-              name="company"
-              label="Company Name"
-              type="name"
-              placeholder=""
-              value={company}
-              onChange={e => this.handleChange(e)}
-            />
-          )}
+        <InputField
+          name="name"
+          label="Name"
+          type="name"
+          placeholder=""
+          value={name}
+          onChange={e => this.handleChange(e)}
+        />
 
         <InputField
           name="email"
@@ -106,15 +61,6 @@ class Signup extends Component {
           type="email"
           placeholder="Student@Yale.edu"
           value={email}
-          onChange={e => this.handleChange(e)}
-        />
-
-        <InputField
-          name="phone"
-          label="Phone"
-          type="number"
-          placeholder=""
-          value={phone}
           onChange={e => this.handleChange(e)}
         />
 
@@ -136,25 +82,9 @@ class Signup extends Component {
           onChange={e => this.handleChange(e)}
         />
 
-        <InputField
-          name="state"
-          label="State"
-          type="text"
-          placeholder=""
-          value={state}
-          onChange={e => this.handleChange(e)}
-        />
-
-        <InputField
-          name="city"
-          label="City"
-          type="text"
-          placeholder=""
-          value={city}
-          onChange={e => this.handleChange(e)}
-        />
-        <div className="flex-end MB30">
-          <Button type="submit" title="Sign Up" loader={loader} />
+        <div className="flex-between">
+          <Button onClick={() => this.props.history.push("/login")} title="Login" />
+          <Button type="submit" title="Register" loader={loader} />
         </div>
       </form>
     );
