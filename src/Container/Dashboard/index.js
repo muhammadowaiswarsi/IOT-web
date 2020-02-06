@@ -2,12 +2,11 @@ import React from "react";
 import Dashboard from "../../Component/Dashboard";
 import "./index.css";
 import { connect } from "react-redux";
-import { Query } from "react-apollo";
+import { Mutation } from "react-apollo";
 import routeAction from "../../store/actions/routeAction";
 import { logout } from "../../Service/AuthService";
-import { getCompanyData, getStudents } from "../../Config/Queries";
-// import { AppSync } from "./../../Config/graphql-config";
-import ReactLoading from "react-loading";
+import { stage_code_add, stage_code_delete } from "../../Config/Queries";
+import { AppSync } from "./../../Config/graphql-config";
 
 class DashboardContainer extends React.Component {
   constructor(props) {
@@ -27,6 +26,10 @@ class DashboardContainer extends React.Component {
         this.setState({
           loader: false
         });
+        localStorage.removeItem(
+          "data"
+        )
+        localStorage.removeItem("user")
         this.props.authed(false);
         this.props.history.replace("/login");
       })
@@ -42,60 +45,37 @@ class DashboardContainer extends React.Component {
     let { loader } = this.state;
     return (
       <div className="MainContainer">
-        {/* <Query
-          fetchPolicy="network-only"
+        <Mutation
           client={AppSync}
-          query={getCompanyData}
-          variables={{ companyID: this.props.user.user_id }}
+          mutation={stage_code_add}
         >
-          {({ loading, error, data }) => {
-            let currentUser = data && data.getCompanyData;
-            if (loading)
-              return (
-                <div
-                  style={{
-                    margin: "0 auto",
-                    width: "20%",
-                    position: "absolute",
-                    top: "25%",
-                    left: "25%",
-                    right: "25%"
-                  }}
-                >
-                  <ReactLoading
-                    type={"bubbles"}
-                    color={"#e91e63"}
-                    height={"20%"}
-                    width={"100%"}
-                  />
-                </div>
-              );
+          {(stage_code_add_mutation) => {
             return (
-              <Query
-                fetchPolicy="network-only"
+              <Mutation
                 client={AppSync}
-                query={getStudents}
-                variables={{ companyID: this.props.user.user_id }}
+                mutation={stage_code_delete}
               >
-                {({ loading, error, data }) => {
-                  let StudentsData = data.getStudents;
-                  return ( */}
-                    <Dashboard
-                      logout={this.logout}
-                      // StudentsData={StudentsData}
-                      // currentUser={currentUser}
-                      // loader={loader}
-                    />
-        {/* //           );
-        //         }}
-        //       </Query>
-        //     );
-        //   }}
-        // </Query> */}
+                {(stage_code_delete_mutation) => {
+                  return (
+                    <div>
+                      <Dashboard
+                        logout={this.logout}
+                        stage_code_add_mutation={stage_code_add_mutation}
+                        stage_code_delete_mutation={stage_code_delete_mutation}
+                        loader={loader}
+                      />
+                    </div>
+                  );
+                }}
+              </Mutation>
+            );
+          }}
+        </Mutation>
       </div>
     );
   }
 }
+
 
 const mapDispatchToProp = dispatch => {
   return {

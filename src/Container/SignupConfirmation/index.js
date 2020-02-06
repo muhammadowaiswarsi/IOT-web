@@ -2,10 +2,7 @@ import React from "react";
 import SignupConfirm from "../../Component/signupConfirm";
 import { Col } from "react-bootstrap";
 import { confirm } from "./../../Service/AuthService";
-// import { AppSync } from "./../../Config/graphql-config";
 import { connect } from "react-redux";
-import { Mutation } from "react-apollo";
-// import { signup } from "./../../Config/Queries";
 import { routeAction } from "./../../store/actions"
 
 class SignupConfirmation extends React.Component {
@@ -23,7 +20,6 @@ class SignupConfirmation extends React.Component {
 
     confirm(this.props.user.user_id, code)
       .then(res => {
-        console.log(res)
         this.setState({
           loader: false
         });

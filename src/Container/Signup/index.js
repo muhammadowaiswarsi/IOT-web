@@ -4,7 +4,6 @@ import { Col } from "react-bootstrap";
 import { connect } from "react-redux";
 import { routeAction } from "./../../store/actions/index";
 import { signup } from "./../../Service/AuthService";
-import { isLoggedIn } from "./../../Service/AuthService";
 import { Error } from "./../../Shared/Error";
 import "./index.css";
 
@@ -32,7 +31,6 @@ class SignupContainer extends React.Component {
             loader: false
           });
           setTimeout(() => {
-            console.log("signup")
             this.props.history.replace(`/confirmation`);
           }, 100);
         })
@@ -48,28 +46,6 @@ class SignupContainer extends React.Component {
         error: "password is not matched"
       })
     }
-  }
-
-  componentDidMount() {
-    isLoggedIn()
-      .then(res => {
-        if (res.attributes.sub) {
-          let user = res.attributes;
-          let obj = {
-            user_id: user.sub
-          }
-          this.props.user(obj);
-          setTimeout(() => {
-            this.props.authed(false);
-          }, 100);
-          this.props.history.replace(`/dashboard`);
-        }
-      })
-      .catch(err => {
-        this.props.authed(false);
-        this.props.history.replace("/login");
-        console.log(err);
-      });
   }
 
   submit = obj => {

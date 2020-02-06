@@ -1,6 +1,6 @@
 import React from "react";
 import Login from "../../Component/login";
-import { Col, Form } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import "./index.css";
 import { login } from "./../../Service/AuthService";
 import { connect } from "react-redux";
@@ -22,7 +22,7 @@ class LoginContainer extends React.Component {
     isLoggedIn()
       .then((res) => {
         if (res.attributes.sub) {
-          let userProfile = res.attributes.profile
+          localStorage.setItem("user", JSON.stringify(res.attributes))
           this.props.authed(true)
           setTimeout(() => {
             this.props.history.replace(`/dashboard`)
@@ -42,6 +42,7 @@ class LoginContainer extends React.Component {
     login(email, password)
       .then(res => {
         let user = res.attributes;
+        localStorage.setItem("user", JSON.stringify(res.attributes))
         let obj = {
           email: user.email,
           user_id: user.sub

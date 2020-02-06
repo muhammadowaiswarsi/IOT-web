@@ -9,9 +9,11 @@ class Loading extends React.Component {
     isLoggedIn()
       .then(res => {
         if (res.attributes.sub) {
+          localStorage.setItem("user", JSON.stringify(res.attributes))
           let user = res.attributes;
           let obj = {
-            user_id: user.sub
+            user_id: user.sub,
+            name: user.name
           }
           this.props.user(obj);
           setTimeout(() => {

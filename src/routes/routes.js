@@ -7,7 +7,6 @@ import SignupContainer from '../Container/Signup';
 import { connect } from "react-redux";
 import routeAction from "./../store/actions/routeAction";
 import Loading from "./../Container/LoaderScreen";
-import { isLoggedIn } from "./../Service/AuthService"
 
 function PrivateRoute({ component: Component, authed, ...rest }) {
     return (
@@ -32,7 +31,6 @@ class Routes extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        console.log(this.props.authed, "confirm route")
         if (prevProps.authed !== this.props.authed) {
             this.setState({
                 authed: this.props.authed,
@@ -44,29 +42,6 @@ class Routes extends Component {
             })
         }
 
-    }
-
-    componentDidMount() {
-        // isLoggedIn()
-        //     .then((res) => {
-        //         if (res.attributes.sub) {
-        //             this.setState({
-        //                 authed: true,
-        //             })
-        //             let user = res.attributes
-        //             let obj = {
-        //                 user_id: user.sub
-        //             }
-        //             this.props.user(obj)
-        //         } else {
-        //             this.setState({
-        //                 authed: false,
-        //             })
-        //         }
-        //     })
-        //     .catch((err) => {
-        //         console.log(err)
-        //     })
     }
 
     render() {
