@@ -6,13 +6,17 @@ import * as serviceWorker from './serviceWorker';
 import Amplify from "aws-amplify";
 import config from "./Config/aws-config";
 import { store } from './store';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
+import {AppSync} from './Config/graphql-config'
+import { ApolloProvider } from 'react-apollo';
 
 Amplify.configure(config)
 
 ReactDOM.render(
   <Provider store={store}>
+    <ApolloProvider client={AppSync}>
         <App />
+        </ApolloProvider>
   </Provider >
   , document.getElementById('root'));
 
