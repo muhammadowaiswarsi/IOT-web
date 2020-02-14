@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Col, Button } from "react-bootstrap";
-import ReactLoading from "react-loading";
 
 import "./index.css";
 
@@ -113,7 +112,6 @@ class Dashboard extends Component {
 
   render() {
     let { loader, items } = this.props;
-    let { addLoader } = this.state;
     let name = JSON.parse(localStorage.getItem("user"));
     name = name && name.name;
     return (
@@ -130,21 +128,6 @@ class Dashboard extends Component {
           </Button>
         </div>
 
-        {/* <div className="input-main-div flex-center-center">
-          <label className="input-label flex-between-center">
-            {" "}
-            Input Here:
-            <input value={this.state.input} onChange={this.changeValue} />
-          </label>
-          <Button className="func-button" onClick={this.submitFunc}>
-            {addLoader ? (
-              <ReactLoading type="spin" width="20px" color="grey" />
-            ) : (
-              "submit"
-            )}
-          </Button>
-        </div> */}
-
         <div className="cards_main_div">
           {items && items.length
             ? items.map((item, index) => {
@@ -159,12 +142,6 @@ class Dashboard extends Component {
                       xs={11}
                     >
                       <div className="tex-div">{item.code_string}</div>
-                      {/* <Button
-                        className="func-button"
-                        onClick={() => this.removeFunc(item, index)}
-                      >
-                        remove
-                      </Button> */}
                     </Col>
                   );
               })

@@ -87,21 +87,6 @@ class DashboardContainer extends React.Component {
                                     if (!subscriptionData.data) return prev;
                                     const newFeedItem =
                                       subscriptionData.data.on_Add_stage_code;
-                                    let old_data = JSON.parse(
-                                      localStorage.getItem("data")
-                                    );
-                                    // if (old_data) {
-                                    //   old_data.push(newFeedItem);
-                                    //   localStorage.setItem(
-                                    //     "data",
-                                    //     JSON.stringify(old_data)
-                                    //   );
-                                    // } else {
-                                    //   localStorage.setItem(
-                                    //     "data",
-                                    //     JSON.stringify([newFeedItem])
-                                    //   );
-                                    // }
                                     return Object.assign({}, prev, {
                                       stage_code: [
                                         ...prev.stage_code,
@@ -123,11 +108,14 @@ class DashboardContainer extends React.Component {
                                       localStorage.getItem("data")
                                     );
                                     if (old_data) {
-                                      old_data = old_data.filter(
-                                        data =>
-                                          data.timestamp !==
-                                          newFeedItem.timestamp
-                                      );
+                                      old_data = old_data.filter(data => {
+                                        return (
+                                          Number(data.timestamp) <=
+                                          Number(newFeedItem.timestamp)) &&
+                                      (data.stage_code ===
+                                            newFeedItem.stage_code
+                                        );
+                                      });
                                       localStorage.setItem(
                                         "data",
                                         JSON.stringify(old_data)
@@ -135,11 +123,14 @@ class DashboardContainer extends React.Component {
                                     }
                                     return Object.assign({}, prev, {
                                       stage_code: [
-                                        ...prev.stage_code.filter(
-                                          time =>
-                                            time.timestamp !==
-                                            newFeedItem.timestamp
-                                        )
+                                        ...prev.stage_code.filter(time => {
+                                          return (
+                                            Number(time.timestamp) <=
+                                            Number(newFeedItem.timestamp)) &&
+                                            (time.stage_code ===
+                                              newFeedItem.stage_code
+                                          );
+                                        })
                                       ]
                                     });
                                   }
